@@ -24,7 +24,7 @@ service.interceptors.request.use(
 
     //req loading
     // @ts-ignore
-    if (req.reqLoading ?? true) {
+    if (req.reqLoading) {
       loadingInstance = ElLoading.service({
         lock: true,
         fullscreen: true,
