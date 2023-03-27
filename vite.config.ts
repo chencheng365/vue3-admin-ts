@@ -37,17 +37,20 @@ export default defineConfig(({ command, mode }) => {
       strictPort: true
     },
     plugins: [
-      vue({ reactivityTransform: true }),
+      vue(),
+      // 在vue3中使用jsx时需要配置此插件
       vueJsx(),
       UnoCSS({
         presets: [presetUno(), presetAttributify(), presetIcons()]
       }),
+      // 证书配置
       mkcert(),
       //compatible with old browsers
       // legacy({
       //   targets: ['chrome 52'],
       //   additionalLegacyPolyfills: ['regenerator-runtime/runtime']
       // }),
+      // svg图标打包插件
       createSvgIconsPlugin({
         iconDirs: [resolve(process.cwd(), 'src/icons/common'), resolve(process.cwd(), 'src/icons/nav-bar')],
         symbolId: 'icon-[dir]-[name]'
@@ -66,10 +69,13 @@ export default defineConfig(({ command, mode }) => {
       }),
       // VueSetupExtend(),using  DefineOptions instant of it
       //https://github.com/antfu/unplugin-auto-import/blob/HEAD/src/types.ts
+      // 自动带入组件
       Components({
+        // 递归扫描配置目录下的组件
         dirs: ['src/components', 'src/icons'],
         extensions: ['vue'],
         deep: true,
+        // 生成d.ts文件
         dts: './typings/components.d.ts'
       }),
       AutoImport({
@@ -96,6 +102,7 @@ export default defineConfig(({ command, mode }) => {
       //   gzipSize: true,
       //   brotliSize: true
       // })
+      // html注入插件
       vitePluginSetupExtend({ inject: { title: setting.title } })
     ],
     build: {
