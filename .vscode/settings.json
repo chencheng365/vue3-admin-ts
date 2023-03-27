@@ -1,4 +1,5 @@
 {
+  "editor.formatOnSave": true, // 每次保存的时候自动格式化
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "npm.packageManager": "yarn"
 }
