@@ -102,5 +102,7 @@ export function validatenumber(number) {
  */
 export function isNumber    (number: string) {
   const reg = /^(([^0][0-9]+|0)\.([0-9]+)$)|^(([^0][0-9]+|0)$)|^(([1-9]+)\.([0-9]+)$)|^(([1-9]+)$)/
+
+	
   return reg.test(number)
 }
