@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import ElementPlus from 'element-plus'
+import VXETable from '@/plugins/vxe-table'
 import App from './App.vue'
 import router from './router'
 
@@ -26,6 +27,7 @@ import './permission'
 
 //import element-plus
 import 'element-plus/dist/index.css'
+
 const app = createApp(App)
 
 //router
@@ -43,5 +45,8 @@ directive(app)
 
 //element-plus
 app.use(ElementPlus)
+
+// 全局注册vxe-tab组件
+app.use(VXETable)
 
 app.mount('#app')

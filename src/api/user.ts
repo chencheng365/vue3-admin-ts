@@ -1,7 +1,17 @@
 //获取用户信息
 import axiosReq from '@/utils/axios-req'
+
+// 获取appToken
+export const getAppToken = subForm => {
+  return axiosReq({
+    url: '/basis-func/user/loginValid',
+    params: subForm,
+    method: 'post'
+  })
+}
+
 export const userInfoReq = (): Promise<any> => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const reqConfig = {
       url: '/basis-func/user/getUserInfo',
       params: { plateFormId: 2 },
@@ -14,7 +24,7 @@ export const userInfoReq = (): Promise<any> => {
 }
 
 //登录
-export const loginReq = (subForm) => {
+export const loginReq = subForm => {
   return axiosReq({
     url: '/basis-func/user/loginValid',
     params: subForm,

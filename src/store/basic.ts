@@ -34,14 +34,14 @@ export const useBasicStore = defineStore('basic', {
       this.token = data
     },
     setFilterAsyncRoutes(routes) {
-      this.$patch((state) => {
+      this.$patch(state => {
         state.filterAsyncRoutes = routes
         state.allRoutes = constantRoutes.concat(routes)
       })
     },
     setUserInfo({ userInfo, roles, codes }) {
       const { username, avatar } = userInfo
-      this.$patch((state) => {
+      this.$patch(state => {
         state.roles = roles
         state.codes = codes
         state.getUserInfo = true
@@ -50,7 +50,7 @@ export const useBasicStore = defineStore('basic', {
       })
     },
     resetState() {
-      this.$patch((state) => {
+      this.$patch(state => {
         state.token = '' //reset token
         state.roles = []
         state.codes = []
@@ -67,43 +67,45 @@ export const useBasicStore = defineStore('basic', {
     resetStateAndToLogin() {
       this.resetState()
       nextTick(() => {
-        router.push({ path: '/login' })
+        const currentUrl = window.location.href.split('?')[0]
+        router.push(`/login?redirect=${currentUrl}`)
+        // router.push({ path: '/login' })
       })
     },
     setSidebarOpen(data) {
-      this.$patch((state) => {
+      this.$patch(state => {
         state.sidebar.opened = data
       })
     },
     setToggleSideBar() {
-      this.$patch((state) => {
+      this.$patch(state => {
         state.sidebar.opened = !state.sidebar.opened
       })
     },
 
     /*keepAlive缓存*/
     addCachedView(view) {
-      this.$patch((state) => {
+      this.$patch(state => {
         if (state.cachedViews.includes(view)) return
         state.cachedViews.push(view)
       })
     },
 
     delCachedView(view) {
-      this.$patch((state) => {
+      this.$patch(state => {
         const index = state.cachedViews.indexOf(view)
         index > -1 && state.cachedViews.splice(index, 1)
       })
     },
     /*third  keepAlive*/
     addCachedViewDeep(view) {
-      this.$patch((state) => {
+      this.$patch(state => {
         if (state.cachedViewsDeep.includes(view)) return
         state.cachedViewsDeep.push(view)
       })
     },
     delCacheViewDeep(view) {
-      this.$patch((state) => {
+      this.$patch(state => {
         const index = state.cachedViewsDeep.indexOf(view)
         index > -1 && state.cachedViewsDeep.splice(index, 1)
       })

@@ -12,7 +12,7 @@ export default {
   /*
    * 传入一串num四个 一个空格
    * */
-  toSplitNumFor(num, numToSpace) {
+  toSplitNumFor(num) {
     return num.replace(/(.{4})/g, '$1 ')
   },
   // 匹配银行卡号
@@ -67,12 +67,12 @@ export default {
    * */
   byArrObjDeleteArrObj2(arrObj, arrObj2, objKey) {
     arrObj
-      .map((value) => {
+      .map(value => {
         return value[objKey]
       })
-      .forEach((value2) => {
+      .forEach(value2 => {
         arrObj2.splice(
-          arrObj2.findIndex((item) => item[objKey] === value2),
+          arrObj2.findIndex(item => item[objKey] === value2),
           1
         )
       })
@@ -88,7 +88,7 @@ export default {
     //foreach splice
     //for substring  slice 不改变原数组
     arrObj.splice(
-      arrObj.findIndex((item) => item[objKey] === value),
+      arrObj.findIndex(item => item[objKey] === value),
       1
     )
     return arrObj
@@ -100,7 +100,7 @@ export default {
    * return: arrObj查找 过后的数组
    * */
   findArrObjByKey(arrObj, objKey, value) {
-    return arrObj[arrObj.findIndex((item) => item[objKey] == value)]
+    return arrObj[arrObj.findIndex(item => item[objKey] == value)]
   },
   /*
    * 根据arrObj 筛选arrObj2   根据arrObj objKey值查找
@@ -112,15 +112,36 @@ export default {
   byArrObjFindArrObj2(arrObj, arrObj2, objKey) {
     const arrObj3: Array<any> = []
     arrObj
-      .map((value) => {
+      .map(value => {
         return value[objKey]
       })
-      .forEach((value2) => {
-        const arrIndex = arrObj2.findIndex((item) => item[objKey] === value2)
+      .forEach(value2 => {
+        const arrIndex = arrObj2.findIndex(item => item[objKey] === value2)
         if (arrIndex !== -1) {
           arrObj3.push(arrObj2[arrIndex])
         }
       })
     return arrObj3
+  },
+  // 通过标识获取不同环境变量下的api数据
+  getServerApibyEnv(flag: string): string {
+    return window.EnvServer[flag][import.meta.env.MODE]
+  },
+  getQueryString(name: string): string | null {
+    const reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`)
+    const r = window.location.search.slice(1).match(reg)
+    if (r !== null) return encodeURIComponent(r[2])
+    return null
+  },
+  // 去除对象中value为空(null,undefined,'')的属性
+  cleanObject(obj: ObjKeys) {
+    if (!obj) {
+      return {}
+    }
+    const result = { ...obj }
+    Object.keys(result).forEach(key => {
+      if (['', null, undefined].includes(result[key])) delete result[key]
+    })
+    return result
   }
 }

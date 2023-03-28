@@ -7,10 +7,10 @@ const service = axios.create()
 let loadingInstance: any = null //loading实例
 //请求前拦截
 service.interceptors.request.use(
-  (req) => {
+  req => {
     const { token, axiosPromiseArr } = useBasicStore()
     //axiosPromiseArr收集请求地址,用于取消请求
-    req.cancelToken = new axios.CancelToken((cancel) => {
+    req.cancelToken = new axios.CancelToken(cancel => {
       axiosPromiseArr.push({
         url: req.url,
         cancel
@@ -19,11 +19,11 @@ service.interceptors.request.use(
     //设置token到header
     req.headers['AUTHORIZE_TOKEN'] = token
     //如果req.method给get 请求参数设置为 ?name=xxx
-    // @ts-ignore
+    // @ts-expect-error
     if ('get'.includes(req.method?.toLowerCase())) req.params = req.data
 
     //req loading
-    // @ts-ignore
+    // @ts-expect-error
     if (req.reqLoading) {
       loadingInstance = ElLoading.service({
         lock: true,
@@ -36,14 +36,14 @@ service.interceptors.request.use(
 
     return req
   },
-  (err) => {
+  err => {
     //发送请求失败
     Promise.reject(err)
   }
 )
 //请求后拦截
 service.interceptors.response.use(
-  (res) => {
+  res => {
     if (loadingInstance) {
       loadingInstance && loadingInstance.close()
     }
@@ -69,7 +69,7 @@ service.interceptors.response.use(
           useBasicStore().resetStateAndToLogin()
         })
       }
-      // @ts-ignore
+      // @ts-expect-error
       if (!res.config?.isNotTipErrorMsg) {
         ElMessage.error({
           message: msg,
@@ -80,7 +80,7 @@ service.interceptors.response.use(
     }
   },
   //响应报错
-  (err) => {
+  err => {
     if (loadingInstance) {
       loadingInstance && loadingInstance.close()
     }
@@ -93,6 +93,8 @@ service.interceptors.response.use(
 )
 //导出service实例给页面调用 , config->页面的配置
 export default function axiosReq(config) {
+  console.log('axiosReq--->', import.meta)
+
   return service({
     baseURL: import.meta.env.VITE_APP_BASE_URL,
     timeout: 8000,

@@ -1,27 +1,20 @@
 // @see: https://cz-git.qbenben.com/zh/guide
 /** @type {import('cz-git').UserConfig} */
-const fs = require('fs')
-const path = require('path')
 const { execSync } = require('child_process')
-
-const scopes = fs
-  .readdirSync(path.resolve(__dirname, 'src'), { withFileTypes: true })
-  .filter((dirent) => dirent.isDirectory())
-  .map((dirent) => dirent.name.replace(/s$/, ''))
 
 // precomputed scope
 const scopeComplete = execSync('git status --porcelain || true')
   .toString()
   .trim()
   .split('\n')
-  .find((r) => ~r.indexOf('M  src'))
+  .find(r => ~r.indexOf('M  src'))
   ?.replace(/(\/)/g, '%%')
   ?.match(/src%%((\w|-)*)/)?.[1]
   ?.replace(/s$/, '')
 
 /** @type {import('cz-git').UserConfig} */
 module.exports = {
-  ignores: [(commit) => commit.includes('init')],
+  ignores: [commit => commit.includes('init')],
   extends: ['@commitlint/config-conventional'],
   rules: {
     'body-leading-blank': [2, 'always'],
@@ -71,8 +64,7 @@ module.exports = {
       { name: '计费管理' },
       { name: '账单管理' },
       { name: '报表管理' },
-      { name: '系统管理' },
-      ...scopes
+      { name: '系统管理' }
     ],
     allowEmptyIssuePrefixs: false,
     allowCustomIssuePrefixs: false,
@@ -89,48 +81,48 @@ module.exports = {
       confirmCommit: '确认使用以上信息提交？(y/n/e/h)'
     },
     types: [
-      { value: 'feat', name: 'feat:     🚀 新增功能 | A new feature', emoji: '🚀' },
+      { value: 'feat', name: 'feat:      🚀 新增功能 | A new feature', emoji: '🚀' },
       { value: 'fix', name: 'fix:       🧩 修复缺陷 | A bug fix', emoji: '🧩' },
       {
         value: 'docs',
-        name: 'docs:      📝 文档更新 | Documentation only changes',
-        emoji: ':memo:'
+        name: 'docs:      📚 文档更新 | Documentation only changes',
+        emoji: '📚'
       },
       {
         value: 'style',
-        name: 'style:     💄 代码格式 | Changes that do not affect the meaning of the code',
-        emoji: ':lipstick:'
+        name: 'style:     🎨 代码格式 | 不影响功能，例如空格、分号等格式修正',
+        emoji: '🎨'
       },
       {
         value: 'refactor',
-        name: 'refactor:  ♻️  代码重构 | A code change that neither fixes a bug nor adds a feature',
-        emoji: ':recycle:'
+        name: 'refactor:  ♻️  代码重构 | 不包括 bug 修复、功能新增',
+        emoji: '♻️'
       },
       {
         value: 'perf',
-        name: 'perf:      ⚡️ 性能提升 | A code change that improves performance',
-        emoji: ':zap:'
+        name: 'perf:      ⚡️ 性能提升 | 性能优化',
+        emoji: '⚡️'
       },
       {
         value: 'test',
-        name: 'test:      ✅ 测试相关 | Adding missing tests or correcting existing tests',
-        emoji: ':white_check_mark:'
+        name: 'test:      ✅ 测试相关 | 添加疏漏测试或已有测试改动',
+        emoji: '✅'
       },
       {
         value: 'build',
-        name: 'build:     📦️ 构建相关 | Changes that affect the build system or external dependencies',
-        emoji: ':package:'
+        name: 'build:     📦️ 构建相关 | 构建流程、外部依赖变更（如升级 npm 包、修改 webpack 配置等）',
+        emoji: '📦️'
       },
       {
         value: 'ci',
-        name: 'ci:        🎡 持续集成 | Changes to our CI configuration files and scripts',
-        emoji: ':ferris_wheel:'
+        name: 'ci:        🎡 持续集成 | 修改 CI 配置、脚本',
+        emoji: '🎡'
       },
-      { value: 'revert', name: 'revert:    🔨 回退代码 | Revert to a commit', emoji: ':hammer:' },
+      { value: 'revert', name: 'revert:    ⏪️ 回退代码 | 回滚 commit', emoji: '⏪️' },
       {
         value: 'chore',
-        name: 'chore:     ⏪️ 其他修改 | Other changes that do not modify src or test files',
-        emoji: ':rewind:'
+        name: 'chore:     🔨 其他修改 | 对构建过程或辅助工具和库的更改（不影响源文件、测试用例）',
+        emoji: '🔨'
       }
     ],
     useEmoji: true,

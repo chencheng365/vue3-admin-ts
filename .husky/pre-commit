@@ -1,8 +1,5 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
 
-#推送之前运行eslint检查
-npm  run lint
-#推送之前运行单元测试检查
-#npm run test:unit
-
+#推送之前运行eslint检查、运行tsc检查
+npx lint-staged

@@ -7,9 +7,11 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    ColumnSetting: typeof import('./../src/components/table/src/ColumnSetting.vue')['default']
     ElSvgIcon: typeof import('./../src/components/ElSvgIcon.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Src: typeof import('./../src/components/table/src/index.vue')['default']
     SvgIcon: typeof import('./../src/icons/SvgIcon.vue')['default']
     TestUnit: typeof import('./../src/components/TestUnit.vue')['default']
   }

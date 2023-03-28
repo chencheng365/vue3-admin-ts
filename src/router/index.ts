@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import basicDemo from './modules/basic-demo'
 // import charts from './modules/charts'
 // import richText from './modules/rich-text'
@@ -212,7 +212,7 @@ export const asyncRoutes: RouterTypes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   scrollBehavior: () => ({ top: 0 }),
   routes: constantRoutes
 })

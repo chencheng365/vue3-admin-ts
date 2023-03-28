@@ -98,7 +98,7 @@ export function validatenumber(number) {
 
 /**
  * 数字
- * @param {string} string-test-commit-aaaa-sadf-test-9999
+ * @param {string} string
  */
 export function isNumber(number: string) {
   const reg = /^(([^0][0-9]+|0)\.([0-9]+)$)|^(([^0][0-9]+|0)$)|^(([1-9]+)\.([0-9]+)$)|^(([1-9]+)$)/

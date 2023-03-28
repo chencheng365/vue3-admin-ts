@@ -96,11 +96,12 @@ const selectPageReq = () => {
   })
 }
 //重置
-const refSearchForm = $ref()
+const refSearchForm = ref()
 const resetForm = () => {
-  refSearchForm.resetFields()
+  refSearchForm.value.resetFields()
   dateRangePacking(['', ''])
   resetPageReq()
+  // console.log('process.env.NODE_ENV---->', process.env.NODE_ENV)
 }
 
 //批量删除
@@ -114,7 +115,7 @@ const multiDelBtnClick = () => {
 }
 
 //单个删除
-const tableDelClick = (row) => {
+const tableDelClick = row => {
   const reqConfig = {
     url: '/integration-front/errorCollection/deleteById',
     params: { id: row.id },

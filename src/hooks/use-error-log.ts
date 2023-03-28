@@ -9,7 +9,7 @@ const reqUrl = '/integration-front/errorCollection/insert'
 let repeatErrorLogJudge = ''
 const errorLogReq = (errLog: string) => {
   axiosReq({
-    url: import.meta.env.VITE_APP_BASE_URL+reqUrl,
+    url: import.meta.env.VITE_APP_BASE_URL + reqUrl,
     data: {
       pageUrl: window.location.href,
       errorLog: errLog,
@@ -26,7 +26,7 @@ const errorLogReq = (errLog: string) => {
 export const useErrorLog = () => {
   //判断该环境是否需要收集错误日志,由settings配置决定
   if (settings.errorLog?.includes(import.meta.env.VITE_APP_ENV)) {
-    jsErrorCollection({ runtimeError: true, rejectError: true, consoleError: true }, (errLog) => {
+    jsErrorCollection({ runtimeError: true, rejectError: true, consoleError: true }, errLog => {
       if (!repeatErrorLogJudge || !errLog.includes(repeatErrorLogJudge)) {
         errorLogReq(errLog)
         //移除重复日志，fix重复提交错误日志，避免造成死循环
